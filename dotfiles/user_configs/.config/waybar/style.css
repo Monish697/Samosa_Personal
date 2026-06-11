@@ -1,0 +1,138 @@
+@define-color fg #ffffff;
+@define-color fg_dim rgba(255, 255, 255, 0.5);
+@define-color bg #181824; /* Deep dark translucent glass */
+@define-color border rgba(255, 255, 255, 0.08); /* Subtle 1px bottom border line */
+@define-color accent #89b4fa;
+@define-color alert #f38ba8;
+
+* {
+  font-family: "JetBrainsMono Nerd Font", "CaskaydiaCove Nerd Font", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+}
+
+/* Glassmorphism flat bar */
+window#waybar {
+  background-color: @bg;
+  color: @fg;
+  border-bottom: 1px solid @border;
+}
+
+tooltip {
+  background: rgba(10, 10, 12, 0.9);
+  border: 1px solid @border;
+  border-radius: 8px;
+}
+
+tooltip label {
+  color: @fg;
+}
+
+/* Workspaces Tab Design */
+#workspaces {
+  padding: 0;
+}
+
+#workspaces button {
+  padding: 0 16px;
+  color: @fg_dim;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  border-bottom: 2px solid transparent;
+}
+
+#workspaces button:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: @fg;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4); /* Text glow effect */
+}
+
+#workspaces button.active {
+  color: @fg;
+  border-bottom: 2px solid @accent;
+  /* Subtle gradient fade upwards from the active border */
+  background: linear-gradient(180deg, rgba(137,180,250,0) 0%, rgba(137,180,250,0.15) 100%);
+  text-shadow: 0 0 5px rgba(137, 180, 250, 0.4);
+}
+
+/* Clock - Bold and bright to stand out */
+#clock {
+  font-weight: 800;
+  padding: 0 20px;
+  color: @fg;
+}
+
+/* Right side modules */
+.modules-right {
+  padding-right: 8px;
+}
+
+#tray,
+#battery,
+#network,
+#bluetooth,
+#pulseaudio,
+#custom-expand-icon {
+  padding: 0 10px;
+  color: @fg_dim;
+  transition: all 0.3s ease;
+}
+
+/* Brighten icons when they are "active" / working */
+#network:not(.disconnected),
+#bluetooth:not(.disabled),
+#pulseaudio:not(.muted),
+#battery {
+  color: @fg;
+}
+
+#tray:hover,
+#battery:hover,
+#network:hover,
+#bluetooth:hover,
+#pulseaudio:hover,
+#custom-expand-icon:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* MPRIS & Weather */
+#mpris {
+  color: @fg_dim;
+}
+
+#mpris {
+  opacity: 0;
+  font-size: 0px;
+  padding: 0;
+  margin: 0;
+}
+
+#mpris.playing,
+#mpris.paused {
+  opacity: 1;
+  font-size: 13px;
+  padding: 0 16px;
+  color: @fg;
+}
+
+#mpris.paused {
+  color: @fg_dim;
+}
+
+
+/* Warnings */
+#battery.critical:not(.charging),
+#network.disconnected,
+#pulseaudio.muted {
+  color: @alert;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  color: @alert;
+}
