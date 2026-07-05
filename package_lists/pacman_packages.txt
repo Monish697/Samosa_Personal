@@ -53,3 +53,4 @@ kvantum
 kvantum-qt5
 qt5-wayland
 qt6-wayland
+wlogout

@@ -199,8 +199,7 @@ echo -e "--- Fixing ownership of user files ---"
 chown -R "$USER:$USER" "$USER_HOME/.config" "$USER_HOME/.local" "$USER_HOME/.bashrc" "$USER_HOME/Pictures"
 
 # Make auto-run scripts executable
-echo -e "--- Setting Permissions for power-menu ---"
-chmod +x "$USER_HOME/.local/bin/power-menu"
+echo -e "--- Setting Permissions for scripts ---"
 chmod +x "$USER_HOME/.local/bin/change-wallpaper"
 chmod +x "$USER_HOME/.local/bin/restore-wallpaper"
 

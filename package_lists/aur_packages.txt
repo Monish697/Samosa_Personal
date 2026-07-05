@@ -1,10 +1,4 @@
 visual-studio-code-bin
 brave-bin
 ttf-cascadia-code-nerd
-walker
-elephant
-elephant-providerlist
-elephant-desktopapplications
-elephant-calc
-elephant-clipboard
-elephant-symbols
+zlaunch-bin
