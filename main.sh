@@ -39,21 +39,66 @@ install_pacman_packages() {
     fi
 }
 
-# install_aur_packages() {
-#     echo -e "\n--- Installing AUR Packages via Yay ---"
-#     local packages_file="$PACKAGE_LISTS/aur_packages.txt"
+install_aur_from_scratch() {
+    # Guard against running as root (makepkg will fail if run as root)
+    if [ "$EUID" -eq 0 ]; then
+        echo "==> Error: Do not run this function as root. makepkg requires standard user privileges."
+        return 1
+    fi
+
+    local packages=(
+        "visual-studio-code-bin"
+        "brave-origin"
+        "ttf-cascadia-code-nerd"
+    )
     
-#     if [ -f "$packages_file" ]; then
-#         echo "Executing yay as user: $USER"
-#         sudo -u "$USER" yay -S --noconfirm --needed $(cat "$packages_file")
+    # Create a temporary directory for cloning and building
+    local build_dir="/tmp/aur_manual_builds"
+    
+    echo "==> Preparing to build AUR packages manually..."
+    
+    # Ensure prerequisites for compiling are installed
+    echo "==> Checking for base-devel and git..."
+    sudo pacman -S --needed --noconfirm base-devel git
+
+    mkdir -p "$build_dir"
+    cd "$build_dir" || return 1
+
+    for pkg in "${packages[@]}"; do
+        echo "----------------------------------------"
+        echo "==> Processing $pkg..."
         
-#         if [ $? -ne 0 ]; then
-#             echo "Error: AUR package installation failed. Check if 'yay' is installed and in the user's PATH."
-#         fi
-#     else
-#         echo "Warning: $packages_file not found. Skipping AUR installs."
-#     fi
-# }
+        # Check if the package is already installed to save time
+        if pacman -Q "$pkg" &> /dev/null; then
+            echo "==> $pkg is already installed. Skipping."
+            continue
+        fi
+        
+        # Clone the AUR repository
+        echo "==> Cloning https://aur.archlinux.org/${pkg}.git..."
+        git clone "https://aur.archlinux.org/${pkg}.git"
+        
+        # Navigate into the cloned directory
+        cd "$pkg" || { echo "==> Error: Failed to enter directory $pkg. Does it exist on the AUR?"; return 1; }
+        
+        # Build and install the package
+        # -s: install missing dependencies via pacman
+        # -i: install the compiled package
+        # --noconfirm: skip pacman Yes/No prompts for dependencies
+        echo "==> Building and installing $pkg..."
+        makepkg -si --noconfirm
+        
+        # Return to the main build directory for the next package
+        cd "$build_dir" || return 1
+    done
+
+    echo "----------------------------------------"
+    echo "==> Cleaning up build files in $build_dir..."
+    rm -rf "$build_dir"
+    
+    echo "==> All packages installed successfully!"
+}
+
 
 install_flatpak_apps() {
     echo -e "\n--- Installing Flatpak Applications ---"
@@ -170,6 +215,8 @@ chmod +x "$USER_HOME/.local/bin/restore-wallpaper"
 # Flatpak Applications
 install_flatpak_apps
 
+install_aur_from_scratch
+
 # GRUB Configuration
 echo -e "\n--- Updating GRUB Configuration ---"
 sed -i 's/^#GRUB_DISABLE_OS_PROBER=false/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
@@ -178,5 +225,4 @@ grub-mkconfig -o /boot/grub/grub.cfg
 echo -e "\n\n***************************************"
 echo "*** Setup Complete! ***"
 echo "*** Please run the following command and then reboot to enjoy Samosa: ***"
-echo "yay -S --needed blueberry visual-studio-code-bin brave-bin ttf-cascadia-code-nerd walker elephant elephant-calc elephant-clipboard elephant-desktopapplications && elephant service enable"
 echo "***************************************"

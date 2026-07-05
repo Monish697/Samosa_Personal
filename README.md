@@ -28,7 +28,7 @@ Start with a minimal base installation of Arch Linux. If using the official `arc
 ### Step 2: Reboot and run the install script
 
 ```bash
-curl -L https://raw.githubusercontent.com/sameerbhagtani/samosa/main/install.sh | sh
+curl -L https://raw.githubusercontent.com/Monish697/Samosa_Personal/main/install.sh | sh
 ```
 
 ---
@@ -40,13 +40,5 @@ curl -L https://raw.githubusercontent.com/sameerbhagtani/samosa/main/install.sh 
 ```bash
 yay -S --needed blueberry visual-studio-code-bin brave-bin ttf-cascadia-code-nerd walker elephant elephant-calc elephant-clipboard elephant-desktopapplications && elephant service enable
 ```
-
----
-
-## Screenshots
-
-![Desktop](/screenshots/desktop.png)
-
-![Application Launcher](/screenshots/app-launcher.png)
 
 ---

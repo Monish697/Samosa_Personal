@@ -1,5 +1,5 @@
 #!/bin/bash
-REPO_URL="https://github.com/sameerbhagtani/samosa.git"
+REPO_URL="https://github.com/Monish697/Samosa_Personal.git"
 INSTALL_DIR="/tmp/samosa"
 
 # Trap to ensure cleanup runs even if the script fails unexpectedly
