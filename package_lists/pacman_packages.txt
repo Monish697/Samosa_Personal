@@ -46,6 +46,7 @@ xournalpp
 btop
 iwd
 impala
+bluetui
 less
 qt5ct
 qt6ct

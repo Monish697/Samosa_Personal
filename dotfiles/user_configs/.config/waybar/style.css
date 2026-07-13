@@ -1,105 +1,65 @@
-@define-color fg #ffffff;
-@define-color fg_dim rgba(255, 255, 255, 0.5);
-@define-color bg #181824; /* Deep dark translucent glass */
-@define-color border rgba(255, 255, 255, 0.08); /* Subtle 1px bottom border line */
-@define-color accent #89b4fa;
-@define-color alert #f38ba8;
-
 * {
-  font-family: "JetBrainsMono Nerd Font", "CaskaydiaCove Nerd Font", sans-serif;
-  font-size: 13px;
+  font-family:
+    "JetBrainsMono Nerd Font", "CaskaydiaCove Nerd Font", "sans-serif";
   font-weight: 600;
   border: none;
   border-radius: 0;
   min-height: 0;
+  margin: 0;
+  padding: 0;
 }
 
-/* Glassmorphism flat bar */
 window#waybar {
-  background-color: @bg;
-  color: @fg;
-  border-bottom: 1px solid @border;
+  background: none;
+  color: #ffffff;
 }
 
 tooltip {
   background: rgba(10, 10, 12, 0.9);
-  border: 1px solid @border;
+  border: 1px solid transparent;
   border-radius: 8px;
+  color: #ffffff;
 }
 
-tooltip label {
-  color: @fg;
-}
-
-/* Workspaces Tab Design */
 #workspaces {
-  padding: 0;
+  padding: 0px 25px 0px 25px;
 }
 
 #workspaces button {
-  padding: 0 16px;
-  color: @fg_dim;
+  font-size: 13px;
+  padding: 4px 16px;
+  color: rgba(255, 255, 255, 0.5);
   transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   border-bottom: 2px solid transparent;
 }
 
 #workspaces button:hover {
-  background-color: rgba(255, 255, 255, 0.03);
-  color: @fg;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4); /* Text glow effect */
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #252525;
+  /* text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);  */
 }
 
 #workspaces button.active {
-  color: @fg;
-  border-bottom: 2px solid @accent;
-  /* Subtle gradient fade upwards from the active border */
-  background: linear-gradient(180deg, rgba(137,180,250,0) 0%, rgba(137,180,250,0.15) 100%);
-  text-shadow: 0 0 5px rgba(137, 180, 250, 0.4);
+  color: #ffffff;
 }
 
 /* Clock - Bold and bright to stand out */
 #clock {
+  font-size: 13px;
   font-weight: 800;
-  padding: 0 20px;
-  color: @fg;
+  padding: 0px 0px 0px 5px;
+  color: #ffffff;
 }
 
-/* Right side modules */
-.modules-right {
-  padding-right: 8px;
+#clock:hover {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #252525;
 }
 
-#tray,
-#battery,
-#network,
-#bluetooth,
-#pulseaudio,
-#custom-expand-icon {
-  padding: 0 10px;
-  color: @fg_dim;
-  transition: all 0.3s ease;
-}
-
-/* Brighten icons when they are "active" / working */
-#network:not(.disconnected),
-#bluetooth:not(.disabled),
-#pulseaudio:not(.muted),
-#battery {
-  color: @fg;
-}
-
-#tray:hover,
-#battery:hover,
-#network:hover,
-#bluetooth:hover,
-#pulseaudio:hover,
-#custom-expand-icon:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* MPRIS & Weather */
 #mpris {
-  color: @fg_dim;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 #mpris {
@@ -113,20 +73,43 @@ tooltip label {
 #mpris.paused {
   opacity: 1;
   font-size: 13px;
-  padding: 0 16px;
-  color: @fg;
+  padding: 0px;
+  color: #ffffff;
 }
 
 #mpris.paused {
-  color: @fg_dim;
+  color: rgba(255, 255, 255, 0.5);
 }
 
+#tray,
+#battery,
+#network,
+#bluetooth,
+#pulseaudio,
+#custom-expand-icon {
+  font-size: 16px;
+  padding: 0 11px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
 
-/* Warnings */
-#battery.critical:not(.charging),
-#network.disconnected,
-#pulseaudio.muted {
-  color: @alert;
+/* Brighten icons when they are "active" / working */
+#network:not(.disconnected),
+#bluetooth:not(.disabled),
+#pulseaudio:not(.muted),
+#battery {
+  color: #ffffff;
+}
+
+#tray:hover,
+#battery:hover,
+#network:hover,
+#bluetooth:hover,
+#pulseaudio:hover,
+#custom-expand-icon:hover {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #252525;
 }
 
 #tray > .passive {
@@ -134,5 +117,13 @@ tooltip label {
 }
 #tray > .needs-attention {
   -gtk-icon-effect: highlight;
-  color: @alert;
+}
+
+.modules-center {
+  /* background-color: #181824; */
+  background-color: #000000;
+
+  margin-bottom: 4px;
+  padding: 4px 30px;
+  border-radius: 0px 0px 30px 30px;
 }

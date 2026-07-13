@@ -16,12 +16,25 @@ INDEX=0
 [ -f "$STATE_FILE" ] && INDEX=$(cat "$STATE_FILE")-1
 (( INDEX >= COUNT )) && INDEX=0
 
-CURRENT="${wallpapers[$INDEX]}"
 
-sleep 2
+# ... (Top half of your script remains the same)
+
+CURRENT="${wallpapers[$INDEX]}"
 
 echo "ok (index $INDEX -> $CURRENT)"
 
+# Wait dynamically until the hyprpaper process is actually running
+while ! pgrep -x hyprpaper > /dev/null; do
+    sleep 0.5
+done
+
+# Give the IPC socket a brief moment to finish binding
+sleep 1 
+
+# Preload the image into memory first
+hyprctl hyprpaper preload "$CURRENT"
+
 for monitor in $(hyprctl monitors | grep 'Monitor' | awk '{ print $2 }'); do
-    hyprctl hyprpaper wallpaper "$monitor,$CURRENT"
+  # Apply the preloaded wallpaper
+  hyprctl hyprpaper wallpaper "$monitor,$CURRENT"
 done
